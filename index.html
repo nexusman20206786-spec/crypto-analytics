@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Cycle Analytics — 2022–2026</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet" />
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css"/> -->
+    <style>
+        :root {
+            --bg: #0f1117;
+            --bg2: #161b27;
+            --bg3: #1c2333;
+            --border: rgba(255, 255, 255, .08);
+            --border2: rgba(255, 255, 255, .14);
+            --text: #e2e8f0;
+            --text2: #8892a4;
+            --text3: #4a5568;
+            --green: #48bb78;
+            --green-bg: rgba(72, 187, 120, .12);
+            --red: #fc8181;
+            --red-bg: rgba(252, 129, 129, .10);
+            --blue: #63b3ed;
+            --blue-bg: rgba(99, 179, 237, .12);
+            --btc: #f6a623;
+            --btc-bg: rgba(246, 166, 35, .12);
+            --eth: #627eea;
+            --eth-bg: rgba(98, 126, 234, .12);
+            --r: 10px;
+            --rs: 6px;
+            --mono: 'JetBrains Mono', monospace;
+            --sans: 'Inter', system-ui, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--sans);
+            min-height: 100vh;
+            padding: 32px;
+            max-width: 1160px;
+            margin: 0 auto
+        }
+
+        /* header */
+        .hdr {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 16px;
+            font-weight: 600
+        }
+
+        .logo i {
+            font-size: 22px;
+            color: var(--btc)
+        }
+
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--green);
+            background: var(--green-bg);
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(72, 187, 120, .2)
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            animation: blink 2s ease-in-out infinite
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: .25
+            }
+        }
+
+        /* price cards */
+        .pgrid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px
+        }
+
+        .pcard {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 20px 24px;
+            transition: border-color .2s
+        }
+
+        .pcard:hover {
+            border-color: var(--border2)
+        }
+
+        .plabel {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px
+        }
+
+        .pbadge {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: var(--rs);
+            letter-spacing: .5px
+        }
+
+        .btc-b {
+            background: var(--btc-bg);
+            color: var(--btc);
+            border: 1px solid rgba(246, 166, 35, .25)
+        }
+
+        .eth-b {
+            background: var(--eth-bg);
+            color: var(--eth);
+            border: 1px solid rgba(98, 126, 234, .25)
+        }
+
+        .pname {
+            font-size: 13px;
+            color: var(--text2)
+        }
+
+        .pval {
+            font-size: 30px;
+            font-weight: 600;
+            font-family: var(--mono);
+            letter-spacing: -1px;
+            margin-bottom: 6px
+        }
+
+        .pchg {
+            font-size: 13px;
+            font-family: var(--mono)
+        }
+
+        .up {
+            color: var(--green)
+        }
+
+        .dn {
+            color: var(--red)
+        }
+
+        .pmeta {
+            font-size: 11px;
+            color: var(--text3);
+            margin-top: 4px
+        }
+
+        /* search */
+        .swrap {
+            position: relative;
+            margin-bottom: 20px
+        }
+
+        .sinner {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 0 16px;
+            transition: border-color .2s
+        }
+
+        .sinner:focus-within {
+            border-color: var(--blue)
+        }
+
+        .sinner i {
+            font-size: 18px;
+            color: var(--text3);
+            flex-shrink: 0
+        }
+
+        #sinput {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            padding: 14px 0;
+            background: transparent;
+            color: var(--text);
+            font-family: var(--sans)
+        }
+
+        #sinput::placeholder {
+            color: var(--text3)
+        }
+
+        .sstatus {
+            font-size: 12px;
+            color: var(--text3);
+            white-space: nowrap
+        }
+
+        .drop {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            right: 0;
+            background: var(--bg2);
+            border: 1px solid var(--border2);
+            border-radius: var(--r);
+            overflow: hidden;
+            z-index: 100;
+            display: none;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, .5)
+        }
+
+        .drop.vis {
+            display: block
+        }
+
+        .di {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border);
+            cursor: default;
+            transition: background .15s
+        }
+
+        .di:last-child {
+            border-bottom: none
+        }
+
+        .di:hover {
+            background: var(--bg3)
+        }
+
+        .dico {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            flex-shrink: 0;
+            color: #fff
+        }
+
+        .dname {
+            flex: 1;
+            font-size: 13px;
+            color: var(--text)
+        }
+
+        .dsym {
+            font-size: 11px;
+            color: var(--text3);
+            margin-right: 6px
+        }
+
+        .abtn {
+            font-size: 12px;
+            font-weight: 500;
+            padding: 5px 14px;
+            border-radius: var(--rs);
+            cursor: pointer;
+            font-family: var(--sans);
+            background: var(--blue-bg);
+            color: var(--blue);
+            border: 1px solid rgba(99, 179, 237, .25);
+            transition: opacity .15s
+        }
+
+        .abtn:hover {
+            opacity: .75
+        }
+
+        .addbadge {
+            font-size: 11px;
+            color: var(--green);
+            display: flex;
+            align-items: center;
+            gap: 3px
+        }
+
+        /* loading / error */
+        .fload {
+            display: none;
+            padding: 10px 0 14px;
+            font-size: 13px;
+            color: var(--text2);
+            align-items: center;
+            gap: 10px
+        }
+
+        .spin {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid var(--border2);
+            border-top-color: var(--text2);
+            border-radius: 50%;
+            animation: spin .8s linear infinite;
+            flex-shrink: 0
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .serr {
+            padding: 8px 0 10px;
+            font-size: 12px;
+            color: var(--red);
+            display: flex;
+            align-items: center;
+            gap: 6px
+        }
+
+        /* section header */
+        .sec-hdr {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px
+        }
+
+        .sec-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text2)
+        }
+
+        .hint {
+            font-size: 11px;
+            color: var(--text3);
+            background: var(--bg3);
+            border: 1px solid var(--border);
+            border-radius: var(--rs);
+            padding: 4px 10px;
+            margin-left: auto
+        }
+
+        /* table */
+        .twrap {
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            overflow-x: auto
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            min-width: 900px
+        }
+
+        th {
+            text-align: left;
+            padding: 10px 14px;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg2);
+            white-space: nowrap
+        }
+
+        td {
+            padding: 13px 14px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: middle
+        }
+
+        tr:last-child td {
+            border-bottom: none
+        }
+
+        tbody tr:hover td {
+            background: rgba(255, 255, 255, .02)
+        }
+
+        .ccell {
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .rico {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+            flex-shrink: 0;
+            color: #fff
+        }
+
+        .rname {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text)
+        }
+
+        .rsym {
+            font-size: 10px;
+            color: var(--text3);
+            margin-top: 1px
+        }
+
+        .plo {
+            color: var(--red);
+            font-family: var(--mono);
+            font-size: 13px;
+            font-weight: 500
+        }
+
+        .phi {
+            color: var(--green);
+            font-family: var(--mono);
+            font-size: 13px;
+            font-weight: 500
+        }
+
+        .dt {
+            color: var(--text3);
+            font-size: 11px;
+            margin-top: 2px
+        }
+
+        .dys {
+            color: var(--text2);
+            font-family: var(--mono);
+            font-size: 13px
+        }
+
+        .rp {
+            color: var(--green);
+            font-family: var(--mono);
+            font-size: 13px;
+            font-weight: 600
+        }
+
+        .rn {
+            color: var(--red);
+            font-family: var(--mono);
+            font-size: 13px;
+            font-weight: 600
+        }
+
+        .cur {
+            color: var(--text2);
+            font-family: var(--mono);
+            font-size: 13px
+        }
+
+        .rbtn {
+            background: none;
+            border: 1px solid var(--border);
+            border-radius: var(--rs);
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text3);
+            transition: all .15s;
+            padding: 0
+        }
+
+        .rbtn:hover {
+            background: var(--red-bg);
+            color: var(--red);
+            border-color: rgba(252, 129, 129, .3)
+        }
+
+        /* empty */
+        .empty {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text3)
+        }
+
+        .empty i {
+            font-size: 40px;
+            display: block;
+            margin-bottom: 14px;
+            opacity: .4
+        }
+
+        .empty p {
+            font-size: 14px
+        }
+
+        .empty small {
+            font-size: 12px;
+            margin-top: 6px;
+            display: block;
+            opacity: .7
+        }
+
+        .foot {
+            margin-top: 24px;
+            font-size: 11px;
+            color: var(--text3);
+            text-align: center
+        }
+    </style>
+</head>
+
+<body>
+    <div class="hdr">
+        <div class="logo"><i class="ti ti-chart-candle"></i> Cycle Analytics</div>
+        <div style="display:flex;align-items:center;gap:10px">
+            <span
+                style="font-size:11px;color:var(--text3);background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:4px 10px">Jan
+                2022 – Present · Binance</span>
+            <span class="live-badge"><span class="dot"></span> Live</span>
+        </div>
+    </div>
+    <div class="pgrid">
+        <div class="pcard">
+            <div class="plabel"><span class="pbadge btc-b">BTC</span><span class="pname">Bitcoin</span></div>
+            <div class="pval" id="bprice">—</div>
+            <div class="pchg" id="bchg">&nbsp;</div>
+            <div class="pmeta" id="bvol">&nbsp;</div>
+        </div>
+        <div class="pcard">
+            <div class="plabel"><span class="pbadge eth-b">ETH</span><span class="pname">Ethereum</span></div>
+            <div class="pval" id="eprice">—</div>
+            <div class="pchg" id="echg">&nbsp;</div>
+            <div class="pmeta" id="evol">&nbsp;</div>
+        </div>
+    </div>
+    <div class="swrap">
+        <div class="sinner">
+            <i class="ti ti-search"></i>
+            <input type="text" id="sinput" placeholder="Search any coin listed on Binance (e.g. Solana, DOGE, LINK)…"
+                autocomplete="off" />
+            <span class="sstatus" id="sstat"></span>
+        </div>
+        <div class="drop" id="drop"></div>
+    </div>
+    <div class="fload" id="fload">
+        <div class="spin"></div><span id="floadtxt">Fetching data…</span>
+    </div>
+    <div id="errmsg"></div>
+    <div class="sec-hdr">
+        <span class="sec-title">Cycle comparison · Jan 2022 – Present</span>
+        <span class="hint">Using daily OHLC candles · Binance API</span>
+    </div>
+    <div id="tcontainer">
+        <div class="empty">
+            <i class="ti ti-chart-line"></i>
+            <p>Search for coins above to compare their 2022–2026 cycle</p>
+            <small>Works with any USDT pair on Binance — BTC, ETH, SOL, DOGE, LINK…</small>
+        </div>
+    </div>
+
+    <div class="sec-hdr" style="margin-top: 100px;margin-bottom: 40px;">
+        <span class="sec-title" id="top30title">
+            Top 30 Coin Comparison (0/30 Loaded)
+        </span>
+        <div style="margin-left:auto;display:flex;gap:10px">
+            <select id="sortField">
+                <option value="roi">ROI</option>
+                <option value="current">Current Price</option>
+                <option value="days">Days</option>
+                <option value="low">Cycle Low</option>
+                <option value="high">Cycle High</option>
+            </select>
+            <select id="sortOrder">
+                <option value="desc">Descending</option>
+                <option value="asc">Ascending</option>
+            </select>
+        </div>
+    </div>
+    <div id="top100container">
+        <div class="empty">
+            <i class="ti ti-loader"></i>
+            <p>Loading Top 30 Coins...</p>
+        </div>
+    </div>
+    <br>
+
+    <div class="foot">Data: Binance · Daily OHLC candles · Prices auto-refresh every 60s · No API key required</div>
+    <script>
+        const API = 'https://api.binance.com/api/v3'; // proxied → https://api.binance.com/api/v3
+        const CYCLE_START_MS = 1640995200000; // Jan 1, 2022
+
+        let coins = [];
+        let addedIds = new Set();
+        let stimer = null;
+        let loading = false;
+
+        let top100 = [];
+        let top100Loading = false;
+
+        let currentSortField = 'roi';
+        let currentSortOrder = 'desc';
+
+        // All Binance USDT pairs — loaded once, used for search
+        let allPairs = [];
+
+        const $ = id => document.getElementById(id);
+
+        /* ── colour palette for coin badges ── */
+        const COLORS = ['#E040FB', '#42A5F5', '#26C6DA', '#66BB6A', '#FFA726', '#EF5350', '#AB47BC', '#26A69A', '#EC407A', '#7E57C2'];
+
+        function badgeColor(sym) { let h = 0; for (const c of sym) h = (h * 31 + c.charCodeAt(0)) % COLORS.length; return COLORS[h]; }
+
+        function badge(sym, cls = 'dico') { return `<div class="${cls}" style="background:${badgeColor(sym)}">${sym.slice(0, 3)}</div>`; }
+
+        /* ── formatters ── */
+        function fp(p) {
+            if (p == null || isNaN(p)) return '—';
+            p = +p;
+            if (p >= 1e6) return '$' + (p / 1e6).toFixed(2) + 'M';
+            if (p >= 10000) return '$' + Math.round(p).toLocaleString();
+            if (p >= 1000) return '$' + p.toLocaleString('en-US', { maximumFractionDigits: 0 });
+            if (p >= 1) return '$' + p.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            if (p >= 0.001) return '$' + p.toFixed(4);
+            return '$' + p.toFixed(6);
+        }
+
+        function fd(ms) {
+            return new Date(+ms).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+
+        function fv(v) {
+            v = +v;
+            if (v >= 1e9) return 'Vol $' + (v / 1e9).toFixed(1) + 'B';
+            if (v >= 1e6) return 'Vol $' + (v / 1e6).toFixed(0) + 'M';
+            return '';
+        }
+
+        /* ── generic JSON fetch ── */
+        async function jget(url) {
+            const r = await fetch(url);
+            if (!r.ok) throw Object.assign(new Error(`HTTP ${r.status}`), { status: r.status });
+            return r.json();
+        }
+
+        /* ── load all USDT pairs once for search ── */
+        async function loadPairs() {
+            try {
+                const d = await jget(`${API}/exchangeInfo`);
+                allPairs = (d.symbols || [])
+                    .filter(s => s.quoteAsset === 'USDT' && s.status === 'TRADING')
+                    .map(s => ({ pair: s.symbol, sym: s.baseAsset, name: s.baseAsset }));
+                console.log('Loaded', allPairs.length, 'USDT pairs from Binance');
+            } catch (e) {
+                console.warn('Could not load pairs list:', e.message);
+            }
+        }
+
+        /* ── BTC / ETH live prices ── */
+        async function fetchTop() {
+            try {
+                const [bt, et] = await Promise.all([
+                    jget(`${API}/ticker/24hr?symbol=BTCUSDT`),
+                    jget(`${API}/ticker/24hr?symbol=ETHUSDT`)
+                ]);
+
+                function fill(d, vid, cid, mid) {
+                    $(vid).textContent = fp(d.lastPrice);
+                    const c = +d.priceChangePercent;
+                    $(cid).textContent = (c >= 0 ? '▲ +' : '▼ ') + Math.abs(c).toFixed(2) + '% (24h)';
+                    $(cid).className = 'pchg ' + (c >= 0 ? 'up' : 'dn');
+                    $(mid).textContent = fv(+d.lastPrice * +d.volume);
+                }
+                fill(bt, 'bprice', 'bchg', 'bvol');
+                fill(et, 'eprice', 'echg', 'evol');
+            } catch (e) { console.warn('Price fetch failed:', e.message); }
+
+        }
+        async function loadTop100() {
+
+            if (top100Loading) return;
+
+            top100Loading = true;
+            top100 = [];
+
+            try {
+
+                const tickers = await jget(`${API}/ticker/24hr`);
+
+                const usdt = tickers
+                    .filter(t => t.symbol.endsWith('USDT'))
+                    .sort((a, b) => (+b.quoteVolume) - (+a.quoteVolume))
+                    .slice(0, 30);
+
+                await Promise.all(
+
+                    usdt.map(async (t) => {
+
+                        try {
+
+                            const klines = await fetchAllKlines(t.symbol);
+
+                            const cycle = analyzeCycle(klines);
+
+                            if (!cycle) return;
+
+                            top100.push({
+                                pair: t.symbol,
+                                sym: t.symbol.replace('USDT', ''),
+                                cycle,
+                                current: +t.lastPrice
+                            });
+
+                            document.getElementById('top30title').textContent =
+                                `Top 30 Coin Comparison (${top100.length}/30 Loaded)`;
+
+                            renderTop100();
+
+                        } catch (err) {
+                            console.error(err);
+                        }
+
+                    })
+
+                );
+
+                renderTop100();
+
+            } finally {
+
+                top100Loading = false;
+
+            }
+        }
+
+
+        /* ── search ── */
+        function doSearch(q) {
+            q = q.trim().toLowerCase();
+            if (!q) { $('drop').classList.remove('vis'); return; }
+
+            const results = allPairs
+                .filter(p => p.sym.toLowerCase().startsWith(q) || p.sym.toLowerCase().includes(q))
+                .slice(0, 10);
+
+            if (!results.length) {
+                $('drop').innerHTML = '<div style="padding:12px 16px;font-size:13px;color:#8892a4">No results — try a Binance symbol like BTC, SOL, DOGE</div>';
+                $('drop').classList.add('vis');
+                return;
+            }
+
+            $('drop').innerHTML = results.map(c => `
+    <div class="di">
+      ${badge(c.sym)}
+      <span class="dname">${c.sym}</span>
+      <span class="dsym">${c.pair}</span>
+      ${addedIds.has(c.pair)
+                    ? '<span class="addbadge"><i class="ti ti-check" style="font-size:13px"></i> Added</span>'
+                    : `<button class="abtn" onclick="addCoin('${c.pair}','${c.sym}')">+ Add</button>`}
+    </div>`).join('');
+            $('drop').classList.add('vis');
+        }
+
+        /* ── fetch ALL daily klines from Jan 2022 to now (paginated) ── */
+        async function fetchAllKlines(pair) {
+            let allKlines = [];
+            let startTime = CYCLE_START_MS;
+            const now = Date.now();
+
+            while (startTime < now) {
+                const url = `${API}/klines?symbol=${pair}&interval=1d&startTime=${startTime}&limit=1000`;
+                const batch = await jget(url);
+                if (!batch.length) break;
+                allKlines = allKlines.concat(batch);
+                const lastOpen = batch[batch.length - 1][0];
+                startTime = lastOpen + 86400000; // next day
+                if (batch.length < 1000) break; // last page
+                await new Promise(r => setTimeout(r, 300)); // small delay between pages
+            }
+
+            console.log(`[${pair}] total daily candles fetched: ${allKlines.length}`);
+            return allKlines;
+        }
+
+        /* ── cycle analysis from klines ── */
+        // kline format: [openTime, open, high, low, close, volume, ...]
+        // We use actual intraday HIGH and LOW for accuracy
+        function analyzeCycle(klines) {
+            if (!klines.length) return null;
+
+            // Bear market period
+            const BEAR_START = new Date('2022-01-01').getTime();
+            const BEAR_END = new Date('2023-12-31').getTime();
+
+            // Find cycle low during bear market only
+            let lo = { price: Infinity, ts: 0 };
+
+            for (const k of klines) {
+                const ts = +k[0];
+                const low = +k[3];
+
+                if (ts >= BEAR_START && ts <= BEAR_END && low < lo.price) {
+                    lo = { price: low, ts };
+                }
+            }
+
+            const listingDate = +klines[0][0];
+
+            const daysFromLaunch =
+                Math.floor((lo.ts - listingDate) / 86400000);
+
+            if (daysFromLaunch <= 60) {
+
+                lo = { price: Infinity, ts: 0 };
+
+                const ignoreBefore =
+                    listingDate + (30 * 86400000);
+
+                for (const k of klines) {
+
+                    const ts = +k[0];
+
+                    if (ts < ignoreBefore)
+                        continue;
+
+                    const low = +k[3];
+
+                    if (
+                        ts >= BEAR_START &&
+                        ts <= BEAR_END &&
+                        low < lo.price
+                    ) {
+
+                        lo = {
+                            price: low,
+                            ts
+                        };
+
+                    }
+
+                }
+
+            }
+
+            // If no bear-market low found
+            if (!lo.ts) {
+
+                lo = { price: Infinity, ts: 0 };
+
+                for (const k of klines) {
+
+                    const ts = +k[0];
+                    const low = +k[3];
+
+                    if (low < lo.price) {
+                        lo = { price: low, ts };
+                    }
+
+                }
+
+            }
+
+            // Find highest price AFTER the cycle low
+            let hi = { price: -Infinity, ts: 0 };
+
+
+            for (const k of klines) {
+                const ts = +k[0];
+                const high = +k[2];
+
+                if (ts >= lo.ts && high > hi.price) {
+                    hi = { price: high, ts };
+                }
+            }
+
+            const days = Math.round((hi.ts - lo.ts) / 86400000);
+            const roi = ((hi.price - lo.price) / lo.price) * 100;
+
+            return {
+                lo,
+                hi,
+                days,
+                roi
+            };
+        }
+
+        /* ── add a coin ── */
+        async function addCoin(pair, sym) {
+            if (addedIds.has(pair) || loading) return;
+            $('drop').classList.remove('vis');
+            $('sinput').value = '';
+            loading = true;
+            $('fload').style.display = 'flex';
+            $('floadtxt').textContent = `Fetching cycle data for ${sym}…`;
+
+            try {
+                // Fetch klines (paginated) + current ticker in parallel
+                const [klines, ticker] = await Promise.all([
+                    fetchAllKlines(pair),
+                    jget(`${API}/ticker/24hr?symbol=${pair}`)
+                ]);
+
+                if (!klines.length) { showErr(`No kline data returned for ${pair}`); return; }
+
+                const cycle = analyzeCycle(klines);
+                if (!cycle) { showErr(`Could not compute cycle for ${sym}`); return; }
+
+                coins.push({ pair, sym, cycle, current: +ticker.lastPrice, name: sym });
+                addedIds.add(pair);
+                renderTable();
+
+            } catch (e) {
+                console.error('addCoin error:', e);
+                if (e.status === 429) showErr('Rate limited — wait 30s and try again.');
+                else showErr(`Failed to load ${sym}: ${e.message}`);
+            } finally {
+                loading = false;
+                $('fload').style.display = 'none';
+            }
+        }
+
+        function showErr(msg) {
+            $('errmsg').innerHTML = `<div class="serr"><i class="ti ti-alert-triangle" style="font-size:14px"></i> ${msg}</div>`;
+            setTimeout(() => { $('errmsg').innerHTML = ''; }, 6000);
+        }
+
+        function removeCoin(pair) {
+            coins = coins.filter(c => c.pair !== pair);
+            addedIds.delete(pair);
+            renderTable();
+        }
+
+        function sortTop100() {
+
+            top100.sort((a, b) => {
+
+                let av, bv;
+
+                switch (currentSortField) {
+
+                    case 'roi':
+                        av = a.cycle.roi;
+                        bv = b.cycle.roi;
+                        break;
+
+                    case 'current':
+                        av = a.current;
+                        bv = b.current;
+                        break;
+
+                    case 'days':
+                        av = a.cycle.days;
+                        bv = b.cycle.days;
+                        break;
+
+                    case 'low':
+                        av = a.cycle.lo.price;
+                        bv = b.cycle.lo.price;
+                        break;
+
+                    case 'high':
+                        av = a.cycle.hi.price;
+                        bv = b.cycle.hi.price;
+                        break;
+                }
+
+                return currentSortOrder === 'asc' ?
+                    av - bv :
+                    bv - av;
+
+            });
+
+        }
+
+        /* ── render table ── */
+        function renderTable() {
+            const ct = $('tcontainer');
+            if (!coins.length) {
+                ct.innerHTML = `<div class="empty"><i class="ti ti-chart-line"></i>
+      <p>Search for coins above to compare their 2022–2026 cycle</p>
+      <small>Works with any USDT pair on Binance — BTC, ETH, SOL, DOGE, LINK…</small></div>`;
+                return;
+            }
+
+            ct.innerHTML = `<div class="twrap"><table>
+    <thead><tr>
+      <th style="min-width:140px">Coin</th>
+      <th style="min-width:120px">Cycle Low ↓</th>
+      <th style="min-width:120px">Cycle High ↑</th>
+      <th style="min-width:65px">Days</th>
+      <th style="min-width:85px">ROI (Low→High)</th>
+      <th style="min-width:105px">Current Price</th>
+      <th style="min-width:40px"></th>
+    </tr></thead>
+    <tbody>${coins.map(co => {
+                const cy = co.cycle;
+                const roi = cy ? (cy.roi >= 0 ? '+' : '') + cy.roi.toFixed(1) + '%' : '—';
+                const rc = cy && cy.roi >= 0 ? 'rp' : 'rn';
+                return `<tr>
+        <td><div class="ccell">
+          ${badge(co.sym, 'rico')}
+          <div><div class="rname">${co.sym}</div><div class="rsym">${co.pair}</div></div>
+        </div></td>
+        <td><div class="plo">${cy ? fp(cy.lo.price) : '—'}</div><div class="dt">${cy ? fd(cy.lo.ts) : ''}</div></td>
+        <td><div class="phi">${cy ? fp(cy.hi.price) : '—'}</div><div class="dt">${cy ? fd(cy.hi.ts) : ''}</div></td>
+        <td class="dys">${cy ? cy.days.toLocaleString() + 'd' : '—'}</td>
+        <td class="${rc}">${roi}</td>
+        <td class="cur">${co.current ? fp(co.current) : '—'}</td>
+        <td><button class="rbtn" onclick="removeCoin('${co.pair}')" title="Remove"><i class="ti ti-x" style="font-size:14px"></i></button></td>
+      </tr>`;
+            }).join('')}</tbody>
+  </table></div>`;
+
+
+        }
+
+        function renderTop100() {
+
+            sortTop100();
+
+            const el = document.getElementById('top100container');
+
+            el.innerHTML = `
+  <div class="twrap">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Coin</th>
+        <th>Cycle Low</th>
+        <th>Cycle High</th>
+        <th>Days</th>
+        <th>ROI</th>
+        <th>Current</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      ${top100.map((c, i) => `
+
+      <tr>
+
+        <td>${i + 1}</td>
+
+        <td>${c.sym}</td>
+
+        <td>${fp(c.cycle.lo.price)}</td>
+
+        <td>${fp(c.cycle.hi.price)}</td>
+
+        <td>${c.cycle.days}</td>
+
+        <td class="rp">
+          ${c.cycle.roi.toFixed(1)}%
+        </td>
+
+        <td>${fp(c.current)}</td>
+
+      </tr>
+
+      `).join('')}
+
+    </tbody>
+
+  </table>
+  </div>`;
+        }
+
+        /* ── events ── */
+        $('sinput').addEventListener('input', e => {
+            clearTimeout(stimer);
+            const q = e.target.value;
+            if (!q.trim()) { $('drop').classList.remove('vis'); return; }
+            stimer = setTimeout(() => doSearch(q), 300);
+        });
+        document.addEventListener('click', e => {
+
+            if (!$('sinput').contains(e.target) && !$('drop').contains(e.target))
+                $('drop').classList.remove('vis');
+        });
+
+        document.getElementById('sortField').addEventListener('change', e => {
+
+            currentSortField = e.target.value;
+
+            renderTop100();
+
+        });
+
+        document.getElementById('sortOrder').addEventListener('change', e => {
+
+            currentSortOrder = e.target.value;
+
+            renderTop100();
+
+        });
+
+        /* ── init ── */
+        loadPairs();
+
+        fetchTop();
+
+        loadTop100();
+
+        setInterval(fetchTop, 60000);
+
+        renderTable();
+    </script>
+</body>
+
+</html>

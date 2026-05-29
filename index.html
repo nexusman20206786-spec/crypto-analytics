@@ -634,6 +634,7 @@
         let addedIds = new Set();
         let stimer = null;
         let loading = false;
+        const ENABLE_TOP30 = false;
 
         let top100 = [];
         let top100Loading = false;
@@ -1141,7 +1142,7 @@
 
         fetchTop();
 
-        loadTop100();
+        if (ENABLE_TOP30) loadTop100();
 
         setInterval(fetchTop, 60000);
 
